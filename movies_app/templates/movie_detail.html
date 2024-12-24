@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ movie.name }} - Movie Detail</title>
+    <style>
+      .movie-detail {
+        max-width: 800px;
+        margin: 2em 7em;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        /* text-align: center; */
+      }
+
+      .movie-detail img {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .movie-detail h1 {
+        font-size: 2em;
+        margin-top: 20px;
+      }
+
+      .movie-detail p {
+        font-size: 1.2em;
+        margin-top: 10px;
+      }
+
+      .backButton {
+        height: 2em;
+        border-radius: 0;
+        background: none;
+        border-color: silver;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: row;
+        gap: 2em;
+      }
+
+      .imageBox {
+      }
+
+      .detailBox {
+      }
+    </style>
+  </head>
+  <body>
+    <div class="movie-detail">
+      <div>
+        <h1>Moview Listing @ GV Cinema</h1>
+        <p>
+          <input
+            class="backButton"
+            type="button"
+            value="Back"
+            onClick="javascript:history.go(-1);"
+          />
+        </p>
+      </div>
+      <h1>{{ movie.name }}</h1>
+      <p>({{movie.mpaa.mpaa_type}}:{{movie.mpaa.mpaa_label}})</p>
+      <hr />
+      <div class="content">
+        <div class="imageBox">
+          <img src="{{ movie.img_path }}" alt="{{ movie.name }}" />
+        </div>
+        <div class="detailBox">
+          <h3>Details</h3>
+          <p><strong>Genres:</strong> {{ movie.genre|join:", " }}</p>
+          <p><strong>Language:</strong> {{ movie.language }}</p>
+          <p><strong>Duration:</strong> {{ movie.duration }} minutes</p>
+          <p><strong>User Rating:</strong> {{ movie.user_rating }}</p>
+          <p><strong>Synopsis</strong></p>
+          <p>{{ movie.description }}</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

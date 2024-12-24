@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie List</title>
+    <style>
+      .top,
+      .category {
+        margin: 2em 7em;
+      }
+
+      .movie-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .movie-tile {
+        display: inline-block;
+        width: 220px;
+        margin: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s;
+        height: 19em;
+      }
+      .movie-tile:hover {
+        transform: scale(1.05);
+      }
+      .movie-tile img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+      .movie-tile h3 {
+        margin-top: 10px;
+        font-size: 1.2em;
+      }
+      .search-bar {
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 100%;
+        max-width: 400px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <h1>Movie Listing @ GV Cinema</h1>
+      <!-- Search Bar -->
+      <input
+        type="text"
+        id="searchInput"
+        class="search-bar"
+        placeholder="Search movies..."
+        value="{{ search_query }}"
+        onkeyup="searchMovies()"
+      />
+    </div>
+
+    <div class="category">
+      <h2>Popular Movies This Month</h2>
+      <hr />
+    </div>
+
+    <div id="movie-list" class="movie-list">
+      {% for movie in movies %}
+      <div
+        class="movie-tile"
+        data-title="{{ movie.name }}"
+        onclick="window.location.href='{% url 'movie_detail' movie.pk %}'"
+      >
+        <img src="{{ movie.img_path }}" alt="{{ movie.name }}" />
+        <h3>{{ movie.name }}</h3>
+        <p>{{ movie.duration }} min</p>
+        <p>User rating: {{movie.user_rating}}</p>
+      </div>
+      {% empty %}
+      <p>No movies found.</p>
+      {% endfor %}
+    </div>
+
+    <script>
+      // JavaScript function to filter movies based on search input
+      function searchMovies() {
+        let input = document.getElementById("searchInput");
+        let filter = input.value.toLowerCase();
+        let movieTiles = document.querySelectorAll(".movie-tile");
+
+        movieTiles.forEach(function (tile) {
+          let title = tile.getAttribute("data-title").toLowerCase();
+          if (title.includes(filter)) {
+            tile.style.display = "";
+          } else {
+            tile.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
